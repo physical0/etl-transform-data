@@ -1,0 +1,4 @@
+2025-11-19 05:47:15,513 - INFO - Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-11-19 05:47:16,282 - INFO - Starting data transformation
+2025-11-19 05:47:16,313 - INFO - Starting data loading to PostgreSQL
+2025-11-19 05:47:16,431 - INFO - Data loaded successfully!

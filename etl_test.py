@@ -5,6 +5,7 @@ from psycopg2.extras import execute_values
 from dotenv import load_dotenv
 import os
 import logging
+from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_type
 
 load_dotenv()
 
@@ -44,33 +45,40 @@ def transform_data(df):
     except Exception as e:
         logging.error("Error transforming data: %s", exc_info=True)
         raise
-
-# For checks if env file has been loaded
-print("=== Environment Variables Debug ===")
-print(f"DB_HOST: {DB_HOST}")
-print(f"DB_NAME: {DB_NAME}")
-print(f"DB_USER: {DB_USER}")
-print(f"DB_PORT: {DB_PORT}")
-print(f"DB_PASS exists: {os.getenv('DB_PASS') is not None}")
-print(f"DB_PASS length: {len(os.getenv('DB_PASS') or '')}")
-
+    
+# # --------------------------------  # #
+# # Retry settings for DB connection  # #
+# # --------------------------------  # #
+@retry(
+    retry = retry_if_exception_type(psycopg2.OperationalError),
+    # wait 2 seconds between attempts
+    wait = wait_fixed(2),
+    # retry up to 5 times            
+    stop = stop_after_attempt(5),    
+)  
+def connect_pgsql():
+    logging.info("Connecting to PostgreSQL")
+    conn = psycopg2.connect(
+        host = DB_HOST,
+        dbname = DB_NAME,
+        user = DB_USER,
+        password = DB_PASS,
+        port = DB_PORT
+    )
+    return conn
+        
 
 def load_pgsql(df):
     logging.info("Starting data loading to PostgreSQL")
     try:
-        conn = psycopg2.connect(
-            host = DB_HOST,
-            dbname = DB_NAME,
-            user = DB_USER,
-            password = DB_PASS,
-            port = DB_PORT
-        )
+        conn = connect_pgsql()
         
         curr = conn.cursor()
 
+        logging.info("Creating a table if it doesn't exist..")
         table_query = """ 
         CREATE TABLE IF NOT EXISTS crypto_price (
-            id TEXT, 
+            id TEXT PRIMARY KEY, 
             symbol TEXT, 
             name TEXT, 
             current_price DECIMAL(20, 2), 
@@ -84,6 +92,7 @@ def load_pgsql(df):
         curr.execute(table_query)
         conn.commit()
         
+        logging.info("Inserting data after table checking and creation..")
         insert = """
             INSERT INTO crypto_price (id, symbol, name, current_price, market_cap, total_volume, last_updated, loaded_at) VALUES %s
         """
@@ -91,10 +100,11 @@ def load_pgsql(df):
         execute_values(curr, insert, df.values.tolist())
         conn.commit()
         
+        
         curr.close()
         conn.close()
         
-        logging.info("Data loaded successfully!")
+        logging.info("Data loaded successfully, ETL completed!")
         
     except Exception as e:
         logging.error("Error loading data: %s", e, exc_info=True)
@@ -102,9 +112,26 @@ def load_pgsql(df):
             conn.rollback()
             conn.close()
         raise
+    
+    finally:
+        if 'curr' in locals(): curr.close()
+        if 'conn' in locals(): conn.close()
+        logging.info("Database connection closed.")
+    
 
-API_URL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
-df1 = extract_data(API_URL)
-df2 = transform_data(df1)
-print(df2)
-load_pgsql(df2)
+
+if __name__ == "__main__":
+    # For checks if env file has been loaded
+    print("=== Environment Variables Debug ===")
+    print(f"DB_HOST: {DB_HOST}")
+    print(f"DB_NAME: {DB_NAME}")
+    print(f"DB_USER: {DB_USER}")
+    print(f"DB_PORT: {DB_PORT}")
+    print(f"DB_PASS exists: {os.getenv('DB_PASS') is not None}")
+    print(f"DB_PASS length: {len(os.getenv('DB_PASS') or '')}")
+        
+    API_URL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
+    df1 = extract_data(API_URL)
+    df2 = transform_data(df1)
+    print(df2)
+    load_pgsql(df2)
