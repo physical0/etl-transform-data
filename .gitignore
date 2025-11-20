@@ -1,1 +1,4 @@
 .env
+
+etl_pipeline.log
+*.log
