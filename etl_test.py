@@ -28,7 +28,7 @@ def extract_data(api_url):
         df = pd.DataFrame(data)
         return df
     except requests.exceptions.RequestException as e:
-        logging.error("Error extracting data from API: %s", exc_info=True)
+        logging.error("Error extracting data from API: %s", str(e))
         raise
 
 
@@ -43,7 +43,7 @@ def transform_data(df):
     
         return df
     except Exception as e:
-        logging.error("Error transforming data: %s", exc_info=True)
+        logging.error("Error transforming data: %s", str(e))
         raise
     
 # # --------------------------------  # #
@@ -107,7 +107,7 @@ def load_pgsql(df):
         logging.info("Data loaded successfully, ETL completed!")
         
     except Exception as e:
-        logging.error("Error loading data: %s", e, exc_info=True)
+        logging.error("Error loading data: %s", e, str(e))
         if 'conn' in locals():
             conn.rollback()
             conn.close()
@@ -129,7 +129,8 @@ if __name__ == "__main__":
     print(f"DB_PORT: {DB_PORT}")
     print(f"DB_PASS exists: {os.getenv('DB_PASS') is not None}")
     print(f"DB_PASS length: {len(os.getenv('DB_PASS') or '')}")
-        
+    
+    # changing logging approach with str(e) - temporary test
     API_URL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
     df1 = extract_data(API_URL)
     df2 = transform_data(df1)

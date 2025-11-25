@@ -11,7 +11,7 @@ from multiprocessing import Pool, cpu_count
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler("etl_pipeline.log"), logging.StreamHandler()]
+                    format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler("etl_pipeline_batch.log"), logging.StreamHandler()]
                     )
 
 DB_HOST = os.getenv("DB_HOST")
@@ -126,7 +126,7 @@ def parallel_insert(df, upsert_query, pg_size=100, chunk_size=1000, workers=None
         batches.append(batch_data)
 
     with Pool(workers) as pool:
-        pool.map(upsert_batch(), batches)
+        pool.map(upsert_batch, batches)
         
 
 def load_and_update_pgsql(df):
@@ -196,12 +196,13 @@ if __name__ == "__main__":
             id, symbol, name, current_price, market_cap, total_volume, last_updated, loaded_at
         )
         VALUES %s
-        ON CONFLICT (id, last_updated) DO UPDATE SET
+        ON CONFLICT (id) DO UPDATE SET
             symbol = EXCLUDED.symbol,
             name = EXCLUDED.name,
             current_price = EXCLUDED.current_price,
             market_cap = EXCLUDED.market_cap,
             total_volume = EXCLUDED.total_volume,
+            last_updated = EXCLUDED.last_updated,
             loaded_at = EXCLUDED.loaded_at;
     """
     
@@ -210,11 +211,13 @@ if __name__ == "__main__":
     df1 = extract_data(API_URL)
     df2 = transform_data(df1)
     print(df2)
-    load_pgsql(df2)
+    chunk_size = int(input("enter the chunk size: "))
+    workers_number = int(input("enter the number of workers: "))
+    #load_and_update_pgsql(df2)
+    parallel_insert(df2, UPSERT_QUERY, pg_size=100, chunk_size=chunk_size, workers=workers_number)
             
 
         
-
 
 
 
