@@ -43,3 +43,38 @@
 2025-11-26 00:55:38,959 - INFO - Inserted batch of size 10
 2025-11-26 00:57:49,397 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
 2025-11-26 00:57:50,075 - INFO - Starting data transformation
+2025-12-09 22:38:35,155 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-12-09 22:38:37,101 - INFO - Starting data transformation
+2025-12-09 22:41:55,274 - INFO - Running parallel insert with 3 workers...
+2025-12-09 22:41:57,308 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,431 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,435 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,435 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,436 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,436 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,515 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,516 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,516 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,517 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,517 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,603 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,604 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,607 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,607 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,607 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,608 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,668 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,668 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,670 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,670 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,671 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,671 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,736 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,738 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,741 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,742 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,748 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,749 - INFO - Connecting to PostgreSQL
+2025-12-09 22:41:57,855 - INFO - Inserted batch of size 6
+2025-12-09 22:41:57,856 - INFO - Inserted batch of size 4
+2025-12-09 22:41:57,864 - INFO - Inserted batch of size 6

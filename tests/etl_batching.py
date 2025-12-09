@@ -10,8 +10,12 @@ from multiprocessing import Pool, cpu_count
 
 load_dotenv()
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_FILE = os.path.join(SCRIPT_DIR, "etl_pipeline_batch.log")
+
 logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler("etl_pipeline_batch.log"), logging.StreamHandler()]
+                    format='%(asctime)s - %(levelname)s - %(message)s', 
+                    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()]
                     )
 
 DB_HOST = os.getenv("DB_HOST")
@@ -64,7 +68,7 @@ def validate_data(df):
         if dtype == str:
             df[col] = df[col].astype(str)
         elif dtype == int:
-            df[col] = df[col].astype("Int64")
+            df[col] = df[col].astype(int).astype("Int64")
         elif dtype == float:
             df[col] = df[col].astype(float)
         else:

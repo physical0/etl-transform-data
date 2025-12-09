@@ -1,2 +1,0 @@
-2025-12-09 22:13:18,568 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
-2025-12-09 22:13:19,379 - INFO - Starting data transformation
