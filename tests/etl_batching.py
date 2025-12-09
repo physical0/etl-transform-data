@@ -211,10 +211,12 @@ if __name__ == "__main__":
     df1 = extract_data(API_URL)
     df2 = transform_data(df1)
     print(df2)
+    #new addition
+    df3 = validate_data(df2)
     chunk_size = int(input("enter the chunk size: "))
     workers_number = int(input("enter the number of workers: "))
     #load_and_update_pgsql(df2)
-    parallel_insert(df2, UPSERT_QUERY, pg_size=100, chunk_size=chunk_size, workers=workers_number)
+    parallel_insert(df3, UPSERT_QUERY, pg_size=100, chunk_size=chunk_size, workers=workers_number)
             
 
         

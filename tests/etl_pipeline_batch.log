@@ -1,0 +1,45 @@
+2025-11-26 00:44:14,980 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-11-26 00:44:16,193 - INFO - Starting data transformation
+2025-11-26 00:46:21,850 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-11-26 00:46:22,711 - INFO - Starting data transformation
+2025-11-26 00:47:04,203 - INFO - Running parallel insert with 2 workers...
+2025-11-26 00:47:05,463 - INFO - Connecting to PostgreSQL
+2025-11-26 00:47:05,605 - INFO - Inserted batch of size 50
+2025-11-26 00:47:05,612 - INFO - Inserted batch of size 50
+2025-11-26 00:50:20,551 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-11-26 00:50:21,886 - INFO - Starting data transformation
+2025-11-26 00:50:53,203 - INFO - Running parallel insert with 4 workers...
+2025-11-26 00:53:17,291 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-11-26 00:53:18,150 - INFO - Starting data transformation
+2025-11-26 00:54:04,079 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-11-26 00:54:04,495 - INFO - Starting data transformation
+2025-11-26 00:54:10,215 - INFO - Running parallel insert with 5 workers...
+2025-11-26 00:54:11,999 - INFO - Connecting to PostgreSQL
+2025-11-26 00:54:12,006 - INFO - Connecting to PostgreSQL
+2025-11-26 00:54:12,007 - INFO - Connecting to PostgreSQL
+2025-11-26 00:54:12,117 - INFO - Connecting to PostgreSQL
+2025-11-26 00:54:12,120 - INFO - Connecting to PostgreSQL
+2025-11-26 00:54:12,126 - INFO - Inserted batch of size 20
+2025-11-26 00:54:12,127 - INFO - Inserted batch of size 20
+2025-11-26 00:54:12,127 - INFO - Inserted batch of size 20
+2025-11-26 00:54:12,200 - INFO - Inserted batch of size 20
+2025-11-26 00:54:12,209 - INFO - Inserted batch of size 20
+2025-11-26 00:54:37,113 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-11-26 00:54:37,943 - INFO - Starting data transformation
+2025-11-26 00:55:37,232 - INFO - Running parallel insert with 5 workers...
+2025-11-26 00:55:38,790 - INFO - Connecting to PostgreSQL
+2025-11-26 00:55:38,793 - INFO - Connecting to PostgreSQL
+2025-11-26 00:55:38,815 - INFO - Connecting to PostgreSQL
+2025-11-26 00:55:38,840 - INFO - Connecting to PostgreSQL
+2025-11-26 00:55:38,848 - INFO - Connecting to PostgreSQL
+2025-11-26 00:55:38,869 - INFO - Inserted batch of size 15
+2025-11-26 00:55:38,870 - INFO - Connecting to PostgreSQL
+2025-11-26 00:55:38,878 - INFO - Inserted batch of size 15
+2025-11-26 00:55:38,879 - INFO - Connecting to PostgreSQL
+2025-11-26 00:55:38,900 - INFO - Inserted batch of size 15
+2025-11-26 00:55:38,929 - INFO - Inserted batch of size 15
+2025-11-26 00:55:38,939 - INFO - Inserted batch of size 15
+2025-11-26 00:55:38,949 - INFO - Inserted batch of size 15
+2025-11-26 00:55:38,959 - INFO - Inserted batch of size 10
+2025-11-26 00:57:49,397 - INFO - (New run) Starting data extraction from API: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd
+2025-11-26 00:57:50,075 - INFO - Starting data transformation

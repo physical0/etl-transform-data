@@ -1,0 +1,61 @@
+# Project Restructuring Plan
+
+## Goal
+Restructure the current flat `src/` directory into a modular `app/etl/` architecture as requested. This involves creating a new directory structure, moving existing files, and creating new placeholder/boilerplate files where necessary to match the requested tree.
+
+## User Review Required
+> [!IMPORTANT]
+> This is a major structural change. All imports in existing files will need to be updated.
+> I will be creating new files for `aws.py`, `config.py`, `logging_config.py`, `loader.py`, `transformer.py`, `extractor.py`, `etl_job.py`, etc., based on standard ETL patterns, as the current codebase seems to be in early stages.
+
+## Proposed Changes
+
+### Directory Structure
+- Create `app/`
+- Create `app/etl/` with subdirectories: `core`, `models`, `schemas`, `services`, `pipeline`, `utils`, `alembic`
+- Create `airflow/dags/`
+
+### File Moves and Creations
+
+#### App Root
+- [NEW] `app/Dockerfile` (moved from [src/Dockerfile](file:///c:/Users/Univ_and_Work_files/Programming/python-files/personal_project/etl/etl_project/src/Dockerfile))
+- [NEW] `app/requirements.txt` (create if not exists, or move from `src/`)
+
+#### Core (`app/etl/core/`)
+- [NEW] [db.py](file:///c:/Users/Univ_and_Work_files/Programming/python-files/personal_project/etl/etl_project/src/db.py) (Refactored from [src/db.py](file:///c:/Users/Univ_and_Work_files/Programming/python-files/personal_project/etl/etl_project/src/db.py))
+- [NEW] `aws.py` (S3 + Secrets Manager helpers)
+- [NEW] `config.py` (Settings, env vars)
+- [NEW] `logging_config.py` (Logging setup)
+
+#### Models (`app/etl/models/`)
+- [NEW] `base.py` (SQLAlchemy declarative base)
+- [NEW] [crypto_model.py](file:///c:/Users/Univ_and_Work_files/Programming/python-files/personal_project/etl/etl_project/src/models/crypto_model.py) (Moved from [src/models/crypto_model.py](file:///c:/Users/Univ_and_Work_files/Programming/python-files/personal_project/etl/etl_project/src/models/crypto_model.py))
+
+#### Schemas (`app/etl/schemas/`)
+- [NEW] [crypto_schema.py](file:///c:/Users/Univ_and_Work_files/Programming/python-files/personal_project/etl/etl_project/src/schemas/crypto_schema.py) (Pandas validation / Pydantic)
+
+#### Services (`app/etl/services/`)
+- [NEW] `loader.py` (Upsert logic)
+- [NEW] `transformer.py` (Data cleaning)
+- [NEW] `extractor.py` (Data fetching)
+
+#### Pipeline (`app/etl/pipeline/`)
+- [NEW] `etl_job.py` (Main flow)
+
+#### Utils (`app/etl/utils/`)
+- [NEW] `chunks.py`
+- [NEW] `timing.py`
+
+#### Entrypoints
+- [NEW] `app/etl/run_etl.py`
+- [NEW] `airflow/dags/etl_dag.py`
+
+## Verification Plan
+
+### Automated Tests
+- Since there are no existing tests mentioned, I will verify by:
+    1.  Running `python -m app.etl.run_etl` (or equivalent) to ensure imports resolve and the script starts.
+    2.  Checking if `docker-compose build` works with the new structure.
+
+### Manual Verification
+- I will inspect the file tree to ensure it matches the requested structure.

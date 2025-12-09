@@ -1,0 +1,8 @@
+sqlalchemy
+psycopg2-binary
+pandas
+boto3
+requests
+python-dotenv
+pydantic-settings
+apache-airflow-providers-postgres
