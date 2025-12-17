@@ -10,8 +10,10 @@ from multiprocessing import Pool, cpu_count
 
 load_dotenv()
 
+getLocalFolder = os.path.dirname(os.path.abspath(__file__))
+
 logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler("etl_pipeline_batch.log"), logging.StreamHandler()]
+                    format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler(os.path.join(getLocalFolder, "etl_pipeline_batch.log")), logging.StreamHandler()]
                     )
 
 DB_HOST = os.getenv("DB_HOST")
@@ -64,7 +66,7 @@ def validate_data(df):
         if dtype == str:
             df[col] = df[col].astype(str)
         elif dtype == int:
-            df[col] = df[col].astype("Int64")
+            df[col] = df[col].astype(int).astype("Int64")
         elif dtype == float:
             df[col] = df[col].astype(float)
         else:
@@ -210,11 +212,13 @@ if __name__ == "__main__":
     API_URL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
     df1 = extract_data(API_URL)
     df2 = transform_data(df1)
-    print(df2)
+    # data validation
+    df3 = validate_data(df2)
+    print(df3)
     chunk_size = int(input("enter the chunk size: "))
     workers_number = int(input("enter the number of workers: "))
-    #load_and_update_pgsql(df2)
-    parallel_insert(df2, UPSERT_QUERY, pg_size=100, chunk_size=chunk_size, workers=workers_number)
+    # load_and_update_pgsql(df2)
+    parallel_insert(df3, UPSERT_QUERY, pg_size=100, chunk_size=chunk_size, workers=workers_number)
             
 
         
